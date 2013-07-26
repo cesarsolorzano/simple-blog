@@ -12,7 +12,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </a>
-      <a class="brand" href="#">WebApp</a>
+      <a class="brand" href="#">Blog</a>
       <div class="nav-collapse">
         <ul class="nav">
           <li class="active"><a href="/">Home</a></li>
@@ -38,9 +38,9 @@
 {%  endblock %}
 {% block html %}
 
-<div class="row">
+<div class="row-fluid">
 
-	<div class="span12">
+	<div >
 	{% if logged %}
 	<p>
 		<a class="btn btn-minin" href="/admin/edit/{{post.key().id()}}"><i class="icon-edit"></i> Edit</a>

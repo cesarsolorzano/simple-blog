@@ -1,8 +1,5 @@
 #!/usr/bin/env python
 import webapp2, os, jinja2, re, user_blog
-#Template information
-template_dir = os.path.join(os.path.dirname(__file__),'templates')
-jinja_environment = jinja2.Environment(autoescape=True, loader=jinja2.FileSystemLoader(template_dir))
 
 from google.appengine.ext import db
 from google.appengine.api import memcache
@@ -19,7 +16,7 @@ class Blog(db.Model):
 class MainHandler(user_blog.BaseHandler):
     def get(self):
     	x = Blog.all()
-        self.render("index.html", param = x, logged= user_blog.is_editor(self))
+        self.render("index.html", param = x, logged= user_blog.is_editor(self), username= self.name_user)
 
 class Single_view(user_blog.BaseHandler):
     def get(self, ide):
@@ -41,7 +38,7 @@ class Edit(user_blog.BaseHandler):
     	post.content = self.request.POST['content']
     	post.tags = re.split('\W+', self.request.POST['tags'])
     	post.put()
-        self.redirect("/post/"+ide)
+        self.redirect("/post/"+post.link)
 
 
 class Add(user_blog.BaseHandler):
@@ -54,7 +51,8 @@ class Add(user_blog.BaseHandler):
     def post(self):
     	auth = self.auth
         author = auth.get_user_by_session()['user_id']
-    	post = Blog(user_created= author,title= self.request.POST['title'], content= self.request.POST['content'], tags= re.split('\W+', self.request.POST['tags']), link= self.request.POST['link'])
+        link = re.sub(r'[^(a-zA-Z0-9\-)]+', '', self.request.POST['link'])
+    	post = Blog(user_created= author, title= self.request.POST['title'], content= self.request.POST['content'], tags= re.split('\W+', self.request.POST['tags']), link= link)
     	post.put()
     	self.render("message.html", message="Post was added!", link="/post/"+str(post.link), messagetitle="Added!")
 

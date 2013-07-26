@@ -96,6 +96,11 @@ class BaseHandler(webapp2.RequestHandler):
 		return user
 
 	@webapp2.cached_property
+	def name_user(self):
+		user_model, timestamp =  self.auth.store.user_model.get_by_auth_token(self.user['user_id'], self.user['token']) if self.user else (None, None)
+		return user_model.name + " " + user_model.last_name
+
+	@webapp2.cached_property
 	def user_model(self):
 		user_model, timestamp =  self.auth.store.user_model.get_by_auth_token(self.user['user_id'], self.user['token']) if self.user else (None, None)
 		return user_model
@@ -103,6 +108,8 @@ class BaseHandler(webapp2.RequestHandler):
 
 class Login(BaseHandler):
     def get(self):
+    	if is_editor(self):
+    		self.redirect("/")
     	return self.render("login.html")
 
     def post(self):

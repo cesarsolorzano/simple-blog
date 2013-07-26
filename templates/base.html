@@ -8,22 +8,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
     <link href="/static/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="/assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/static/css/bootstrap-responsive.css" rel="stylesheet">
       <style type="text/css">
 h3 a, h1 a {
     color: black;}
 h3 a:hover, h1 a:hover { text-decoration: none; color: gray;}
 h3 a:hover{  color: black; text-decoration: underline;}
+.containerred { width:50%; margin: auto; min-width:320px;}
   </style>
   </head>
   <body>
  
 {% block nav %}
 {% endblock %}
- <section  class="container"> 
-   <h1><a href="/">Blog</a></h1><hr>
+ <section class="containerred">
+
+<h1><a href="/">Blog</a></h1><hr>
 {% block html %}
 {% endblock %}
+
 </section>
     <script src="http://code.jquery.com/jquery.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>

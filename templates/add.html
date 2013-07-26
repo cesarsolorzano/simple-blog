@@ -1,7 +1,12 @@
 {% extends "base.html" %}
 {% block title %}Edit{% endblock %}
 {% block head %}
+<script type="text/javascript">
+function duplicate(f){
+f.link.value = f.title.value.replace(/ +/g, ' ').replace(/ /g, '-').replace(/[^0-9a-zA-Z\-]+/g, "").replace(/-$/, "").toLowerCase();
+}
 
+</script>
 {% endblock %}
 {% block nav %}
 {% if logged %}
@@ -14,11 +19,11 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </a>
-      <a class="brand" href="#">WebApp</a>
+      <a class="brand" href="/">Blog</a>
       <div class="nav-collapse">
         <ul class="nav">
           <li ><a href="/">Home</a></li>
-          <li class="active"><a href="/admin/add">Write post</a></li>                  
+          <li class="active"><a href="#">Write post</a></li>                  
         </ul>    
          <ul class="nav pull-right">
           <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
@@ -39,8 +44,7 @@
 {% endif %}
 {%  endblock %}
 {% block html %}
-<div class="row"><div class="span12">
-
+<div class="row-fluid"><div class="span12">
 
 
 
@@ -53,11 +57,11 @@
 
 <div class="input">
  <label>Title</label>
-  <input  class="span12" name="title"  type="text" required>
+  <input  onchange="duplicate(this.form)" class="span12" name="title"  type="text" required>
 </div>
 <div class="input-prepend">
   <span class="add-on">http://localhost:20095/post/</span>
-  <input name="link" type="text" required>
+  <input  name="link" type="text" required>
 </div>
 
 
@@ -97,5 +101,5 @@
 
 
 
-</div>
+</div><div class="span1"></div>
 {% endblock %}
