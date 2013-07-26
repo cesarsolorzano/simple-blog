@@ -16,7 +16,11 @@ class Blog(db.Model):
 class MainHandler(user_blog.BaseHandler):
     def get(self):
     	x = Blog.all()
-        self.render("index.html", param = x, logged= user_blog.is_editor(self), username= self.name_user)
+        if user_blog.is_editor(self):
+            self.render("index.html", param = x, logged= user_blog.is_editor(self), username= self.name_user)
+        else:
+            self.render("index.html", param = x, logged= user_blog.is_editor(self))
+
 
 class Single_view(user_blog.BaseHandler):
     def get(self, ide):
